@@ -1,5 +1,6 @@
 package config;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +11,12 @@ import java.util.Properties;
  * @author avonva
  *
  */
-public class PropertiesReader {
+public class Config {
+	
+	private String PROXY_CONFIG_PATH = "config/proxyConfig.xml";
+	public static final String PROXY_HOST_NAME = "Proxy.ManualHostName";
+	public static final String PROXY_PORT = "Proxy.ManualPort";
+	public static final String PROXY_MODE = "Proxy.Mode";
 	
 	private static final String CONFIG_PATH = "config/githubConfig.xml";
 	
@@ -26,12 +32,48 @@ public class PropertiesReader {
 	private static final String APP_ICON_FOLDER = "Application.IconFolder";
 	public static final String APP_NAME_ENTRY = "Application.NameEntry";
 	public static final String APP_DB_FOLDER = "Application.DatabaseFolder";
+	
+	public static final String APP_KEYWORD_NAME = "Application.Keyword";
 
+	/**
+	 * Set the path where the config folder is present, by the default is current directory
+	 * @param basePath
+	 */
+	public Config(String basePath) {
+		this.PROXY_CONFIG_PATH = basePath + PROXY_CONFIG_PATH;
+	}
+
+	public Config() {}
+	
+	public String getConfigPath() {
+		return this.PROXY_CONFIG_PATH;
+	}
+	
+	/**
+	 * Get customized proxy hostname
+	 * @return
+	 */
+	public String getProxyHostname() {
+		return getValue(PROXY_CONFIG_PATH, PROXY_HOST_NAME);
+	}
+	
+	/**
+	 * Get customized proxy port
+	 * @return
+	 */
+	public String getProxyPort() {
+		return getValue(PROXY_CONFIG_PATH, PROXY_PORT);
+	}
+	
+	public ProxyMode getProxyMode() {
+		return ProxyMode.fromString(getValue(PROXY_CONFIG_PATH, PROXY_MODE));
+	}
+	
 	/**
 	 * Get the real application version
 	 * @return
 	 */
-	public static String getApplicationVersion() {
+	public String getApplicationVersion() {
 		String version = getAppConfigEntry(APP_VERSION_ENTRY);
 		
 		if (version == null || version.isEmpty()) {
@@ -41,16 +83,16 @@ public class PropertiesReader {
 		return version;
 	}
 	
-	public static String getApplicationName() {
+	public String getApplicationName() {
 		return getAppConfigEntry(APP_NAME_ENTRY);
 	}
 	
-	public static String getApplicationFolder() {
+	public String getApplicationFolder() {
 		String appFolder = getValue(APP_FOLDER);
 		return appFolder + System.getProperty("file.separator");
 	}
 	
-	public static String getJarPath() {
+	public String getJarPath() {
 		String appFolder = getApplicationFolder();
 		return appFolder + getValue(JAR_PATH);
 	}
@@ -59,13 +101,13 @@ public class PropertiesReader {
 	 * Get the real application icon
 	 * @return
 	 */
-	public static String getApplicationIconPath() {
+	public String getApplicationIconPath() {
 		String appFolder = getValue(APP_FOLDER) + System.getProperty("file.separator");
 		String iconFolder = getValue(APP_ICON_FOLDER) + System.getProperty("file.separator");
 		return appFolder + iconFolder + getAppConfigEntry(APP_ICON);
 	}
 	
-	private static String getAppConfigEntry(String appEntry) {
+	private String getAppConfigEntry(String appEntry) {
 		String appFolder = getValue(APP_FOLDER);
 		String appConfigFile = getValue(APP_CONFIG_FILE);
 		String appConfigEntry = getValue(appEntry);
@@ -78,7 +120,10 @@ public class PropertiesReader {
 	 * Read the application properties from the xml file
 	 * @return
 	 */
-	public static Properties getProperties(String filename) {
+	public Properties getProperties(String filename) {
+
+		File file = new File(filename);
+		System.out.println("Reading property from " + file.getAbsolutePath());
 		
 		Properties properties = new Properties();
 
@@ -97,13 +142,13 @@ public class PropertiesReader {
 	 * @param property
 	 * @return
 	 */
-	public static String getValue(String property) {
+	public String getValue(String property) {
 		return getValue(CONFIG_PATH, property);
 	}
 	
-	private static String getValue(String propertiesFilename, String property) {
+	private String getValue(String propertiesFilename, String property) {
 		
-		Properties prop = PropertiesReader.getProperties(propertiesFilename);
+		Properties prop = getProperties(propertiesFilename);
 		
 		if ( prop == null )
 			return "not found";

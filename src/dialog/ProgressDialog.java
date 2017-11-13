@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
-import config.PropertiesReader;
+import config.Config;
 
 /**
  * Progress bar
@@ -38,6 +38,7 @@ public class ProgressDialog {
 		
 		this.frame = new JFrame();
 		frame.setResizable(false);
+		frame.setAlwaysOnTop(true);
 		
 		// center the frame
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -54,7 +55,8 @@ public class ProgressDialog {
 		frame.add(panel);
 		
 		// set application title
-		String frameTitle = PropertiesReader.getApplicationName();
+		Config config = new Config();
+		String frameTitle = config.getApplicationName();
 		if (frameTitle == null) {
 			frameTitle = "Update";
 		}
@@ -62,7 +64,7 @@ public class ProgressDialog {
 		frame.setTitle(frameTitle);
 		
 		// set the application icon
-		String appIconPath = PropertiesReader.getApplicationIconPath();
+		String appIconPath = config.getApplicationIconPath();
 		
 		if (appIconPath != null) {
 			File appIcon = new File(appIconPath);

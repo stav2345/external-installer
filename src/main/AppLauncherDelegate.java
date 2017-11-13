@@ -3,7 +3,7 @@ package main;
 import java.io.File;
 import java.io.IOException;
 
-import config.PropertiesReader;
+import config.Config;
 
 public class AppLauncherDelegate {
 
@@ -15,15 +15,20 @@ public class AppLauncherDelegate {
 	public void launchApp() throws InterruptedException, IOException {
 		
 		// read jar relative path
-		String appPath = PropertiesReader.getApplicationFolder();
-		String jarName = PropertiesReader.getValue(PropertiesReader.JAR_PATH);
-		String javaPath = PropertiesReader.getValue(PropertiesReader.JAVA_PATH);
+		
+		Config config = new Config();
+		
+		String appPath = config.getApplicationFolder();
+		String jarName = config.getValue(Config.JAR_PATH);
+		String javaPath = config.getValue(Config.JAVA_PATH);
 		
 		System.out.println("Launching " + jarName 
 				+ " with java in " + javaPath 
 				+ " from folder " + appPath);
 		
 		// start the jar
+		
+		// "-XstartOnFirstThread",  for mac
 		ProcessBuilder pb = new ProcessBuilder(javaPath, "-jar", jarName);
 		
 		// set the new working directory
@@ -33,9 +38,7 @@ public class AppLauncherDelegate {
 		pb.inheritIO();
 		
 		// start the process
-		Process p = null;
-		
-		p = pb.start();
+		Process p = pb.start();
 		
 		p.waitFor();
 	}

@@ -1,7 +1,5 @@
 package release;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 
 import com.eclipsesource.json.Json;
@@ -10,16 +8,26 @@ import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 
 import config.GithubChecker;
+import config.Config;
 
 public class ReleaseParser {
 
 	private String jsonInput;
 	private JsonValue value;
 	
+	/**
+	 * Parser for a github release. It extracts several useful information
+	 * needed to check if the app is up to date and to download new versions of it.
+	 * @param jsonInput the github release in json format
+	 */
 	public ReleaseParser(String jsonInput) {
 		this.jsonInput = jsonInput;
 	}
 	
+	/**
+	 * Parse the json input
+	 * @return
+	 */
 	private JsonValue getJson() {
 		
 		if (this.value == null) {
@@ -53,7 +61,11 @@ public class ReleaseParser {
 		return url;
 	}
 	
-	
+	/**
+	 * Get the first github release asset contained
+	 * in the assets array
+	 * @return
+	 */
 	public JsonObject getFirstAsset() {
 		
 		JsonArray assets = getAssets();
@@ -69,26 +81,37 @@ public class ReleaseParser {
 	}
 	
 	/**
-	 * Get the release which does not contain the
-	 * java folder in it (it is lighter)
+	 * Get the release url from which the app can
+	 * be downloaded.
 	 * @return
 	 */
 	public JsonObject GetAppRelease() {
 		
 		JsonArray assets = getAssets();
+		
+		Config config = new Config();
+		
+		// keyword to identify the file that needs to be downloaded
+		String appKeyword = config.getValue(Config.APP_KEYWORD_NAME);
+		
 		for (JsonValue value : assets) {
 			String assetName = value.asObject().getString("name", "");
-			if (assetName.contains("onlyapp")) {
+			if (assetName.contains(appKeyword)) {
 				return value.asObject();
 			}
 		}
 		
-		System.err.println("Cannot find application version with nojava flag in its name. Example tool-nojava.zip");
+		System.err.println("Cannot find application version with " + appKeyword 
+				+ " flag in its name. Example tool-" + appKeyword + ".zip");
 		System.err.println("Using first available asset instead");
 		
 		return getFirstAsset();
 	}
 	
+	/**
+	 * Get all the release assets
+	 * @return
+	 */
 	public JsonArray getAssets() {
 		
 		JsonValue value = getJson();
@@ -100,7 +123,8 @@ public class ReleaseParser {
 	}
 	
 	/**
-	 * Get the size of the attachment
+	 * Get the size of the release (needed to download
+	 * the app with {@link FileDownloader})
 	 * @return
 	 */
 	public int getSize() {
@@ -114,34 +138,5 @@ public class ReleaseParser {
 		int size = app.getInt("size", -1);
 		
 		return size;
-	}
-	
-	/**
-	 * Test of json parser
-	 * @param args
-	 * @throws IOException
-	 */
-	public static void main(String[] args) throws IOException {
-		String content = readFile("C:\\Users\\avonva\\Desktop\\EclipseWS\\GithubReleaseChecker\\latest.txt");
-		ReleaseParser parser = new ReleaseParser(content);
-		String version = parser.getVersion();
-		System.out.println(version);
-	}
-	
-	public static String readFile(String fileName) throws IOException {
-	    BufferedReader br = new BufferedReader(new FileReader(fileName));
-	    try {
-	        StringBuilder sb = new StringBuilder();
-	        String line = br.readLine();
-
-	        while (line != null) {
-	            sb.append(line);
-	            sb.append("\n");
-	            line = br.readLine();
-	        }
-	        return sb.toString();
-	    } finally {
-	        br.close();
-	    }
 	}
 }

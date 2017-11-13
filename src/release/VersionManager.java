@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import config.GithubChecker;
-import config.PropertiesReader;
+import config.Config;
 import dialog.ProgressDialog;
 import zip.ZipManager;
 
@@ -27,8 +27,11 @@ public class VersionManager {
 	public String getLastRelease() throws IOException {
 		
 		if (lastRelease == null) {
-			String username = PropertiesReader.getValue(PropertiesReader.REPOSITORY_OWNER);
-			String repo = PropertiesReader.getValue(PropertiesReader.REPOSITORY_NAME);
+			
+			Config config = new Config();
+			
+			String username = config.getValue(Config.REPOSITORY_OWNER);
+			String repo = config.getValue(Config.REPOSITORY_NAME);
 
 			GetLastRelease req = new GetLastRelease(username, repo);
 			lastRelease = req.get();
@@ -67,7 +70,8 @@ public class VersionManager {
 	}
 	
 	private File getInstallOkFile() {
-		String folder = PropertiesReader.getApplicationFolder();
+		Config config = new Config();
+		String folder = config.getApplicationFolder();
 		String filePath = folder + INSTALL_OK_FILE;
 		File file = new File(filePath);
 		return file;
@@ -80,7 +84,8 @@ public class VersionManager {
 	 */
 	public boolean isOldVersion() throws IOException {
 
-		String currentVersion = PropertiesReader.getApplicationVersion();
+		Config config = new Config();
+		String currentVersion = config.getApplicationVersion();
 
 		// check if user has last version
 		ReleaseParser parser = getParserInstance();

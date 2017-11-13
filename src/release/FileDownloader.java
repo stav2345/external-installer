@@ -3,7 +3,7 @@ package release;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
+import java.net.URLConnection;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.List;
@@ -31,8 +31,6 @@ public class FileDownloader extends SwingWorker<Void, Integer> implements AutoCl
 	private long contentLength;
 	private long contentDownloaded;
 	
-	private URL url;
-	
 	// stuff that needs to be closed at the end of the process
 	private InputStream inputStream;
 	private FileOutputStream outputStream;
@@ -53,8 +51,6 @@ public class FileDownloader extends SwingWorker<Void, Integer> implements AutoCl
 		
 		this.finished = false;
 		
-		// initialize process
-		this.url = new URL(endpoint);
 		this.outputStream = new FileOutputStream(outputFilename);
 		
 		// connect to the endpoint
@@ -84,7 +80,8 @@ public class FileDownloader extends SwingWorker<Void, Integer> implements AutoCl
 	 */
 	private void connect() throws IOException {
 		System.out.println("Connecting to: " + endpoint);
-		this.inputStream = url.openStream();
+		URLConnection con = HttpManager.openConnection(endpoint);
+		this.inputStream = con.getInputStream();
 		this.inputChannel = Channels.newChannel(inputStream);
 	}
 

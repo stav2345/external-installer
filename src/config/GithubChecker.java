@@ -25,6 +25,8 @@ public class GithubChecker {
 		// create temporary folder if needed
 		File file = new File(dirName);
 		
+		System.out.println("Creating " + dirName);
+		
 		// create the directory
 		if (!file.exists()) {
 			boolean created = file.mkdir();
@@ -38,7 +40,9 @@ public class GithubChecker {
 	
 	public static void initialize() {
 		checkDir(TEMP_FOLDER);
-		checkDir(PropertiesReader.getApplicationFolder());
+		
+		Config r = new Config();
+		checkDir(r.getApplicationFolder());
 	}
 	
 	/**
