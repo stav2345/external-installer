@@ -14,6 +14,8 @@ import java.util.Properties;
 public class Config {
 	
 	private String PROXY_CONFIG_PATH = "config/proxyConfig.xml";
+	private String PARENT_PROXY_CONFIG_PATH = "../config/proxyConfig.xml";
+	
 	public static final String PROXY_HOST_NAME = "Proxy.ManualHostName";
 	public static final String PROXY_PORT = "Proxy.ManualPort";
 	public static final String PROXY_MODE = "Proxy.Mode";
@@ -49,12 +51,22 @@ public class Config {
 		return this.PROXY_CONFIG_PATH;
 	}
 	
+	private String getFromParent(String key) {
+		return getValue(PARENT_PROXY_CONFIG_PATH, key);
+	}
+	
 	/**
 	 * Get customized proxy hostname
 	 * @return
 	 */
 	public String getProxyHostname() {
-		return getValue(PROXY_CONFIG_PATH, PROXY_HOST_NAME);
+		
+		String name = getFromParent(PROXY_HOST_NAME);
+		
+		if (name == null)
+			return getValue(PROXY_CONFIG_PATH, PROXY_HOST_NAME);
+		
+		return name;
 	}
 	
 	/**
@@ -62,11 +74,23 @@ public class Config {
 	 * @return
 	 */
 	public String getProxyPort() {
-		return getValue(PROXY_CONFIG_PATH, PROXY_PORT);
+		
+		String port = getFromParent(PROXY_PORT);
+		
+		if (port == null)
+			return getValue(PROXY_CONFIG_PATH, PROXY_PORT);
+		
+		return port;
 	}
 	
 	public ProxyMode getProxyMode() {
-		return ProxyMode.fromString(getValue(PROXY_CONFIG_PATH, PROXY_MODE));
+		
+		String mode = getFromParent(PROXY_MODE);
+		
+		if (mode == null)
+			mode = getValue(PROXY_CONFIG_PATH, PROXY_MODE);
+
+		return ProxyMode.fromString(mode);
 	}
 	
 	/**
@@ -150,8 +174,8 @@ public class Config {
 		
 		Properties prop = getProperties(propertiesFilename);
 		
-		if ( prop == null )
-			return "not found";
+		if (prop == null)
+			return null;
 		
 		String value = prop.getProperty(property);
 		
