@@ -1,6 +1,5 @@
 package config;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,10 +60,10 @@ public class Config {
 	 */
 	public String getProxyHostname() {
 		
-		String name = getFromParent(PROXY_HOST_NAME);
+		String name = getValue(PROXY_CONFIG_PATH, PROXY_HOST_NAME);
 		
 		if (name == null)
-			return getValue(PROXY_CONFIG_PATH, PROXY_HOST_NAME);
+			return getFromParent(PROXY_HOST_NAME);
 		
 		return name;
 	}
@@ -75,20 +74,20 @@ public class Config {
 	 */
 	public String getProxyPort() {
 		
-		String port = getFromParent(PROXY_PORT);
+		String port = getValue(PROXY_CONFIG_PATH, PROXY_PORT);
 		
 		if (port == null)
-			return getValue(PROXY_CONFIG_PATH, PROXY_PORT);
+			return getFromParent(PROXY_PORT);
 		
 		return port;
 	}
 	
 	public ProxyMode getProxyMode() {
 		
-		String mode = getFromParent(PROXY_MODE);
+		String mode = getValue(PROXY_CONFIG_PATH, PROXY_MODE);
 		
 		if (mode == null)
-			mode = getValue(PROXY_CONFIG_PATH, PROXY_MODE);
+			mode = getFromParent(PROXY_MODE);
 
 		return ProxyMode.fromString(mode);
 	}
@@ -145,9 +144,6 @@ public class Config {
 	 * @return
 	 */
 	public Properties getProperties(String filename) {
-
-		File file = new File(filename);
-		System.out.println("Reading property from " + file.getAbsolutePath());
 		
 		Properties properties = new Properties();
 

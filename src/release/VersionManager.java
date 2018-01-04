@@ -3,8 +3,8 @@ package release;
 import java.io.File;
 import java.io.IOException;
 
-import config.GithubChecker;
 import config.Config;
+import config.GithubChecker;
 import dialog.ProgressDialog;
 import zip.ZipManager;
 
@@ -91,8 +91,25 @@ public class VersionManager {
 		ReleaseParser parser = getParserInstance();
 
 		String latestVersion = parser.getVersion();
-
-		boolean isOld = currentVersion.compareTo(latestVersion) < 0;
+		
+		String[] current = currentVersion.split("\\.");
+		String[] latest = latestVersion.split("\\.");
+		
+		boolean isOld = false;
+		for (int i = 0; i < Math.min(latest.length, current.length); ++i) {
+			
+			// if a number is not found, the default is 0
+			int currentNum = i < current.length ? Integer.parseInt(current[i]) : 0;
+			int latestNum = i < latest.length ? Integer.parseInt(latest[i]) : 0;
+			
+			if (currentNum == latestNum)
+				continue;
+			
+			if (currentNum < latestNum) {
+				isOld = true;
+				break;
+			}
+		}
 		
 		if (isOld) {
 			System.out.println("Need update " + currentVersion 

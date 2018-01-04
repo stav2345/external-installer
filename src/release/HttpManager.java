@@ -116,8 +116,6 @@ public class HttpManager {
 		if ((hostname == null || hostname.isEmpty()) || (port == null || port.isEmpty())) {
 			throw new ProxyConfigException("hostname: " + hostname + ", port: " + port);
 		}
-
-		System.out.println("Using proxy configuration, hostname: " + hostname + ", port: " + port);
 		
 		try {
 			int portInt = Integer.valueOf(port);
