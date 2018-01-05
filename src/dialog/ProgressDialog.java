@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
-import config.Config;
+import config.GithubConfig;
 
 /**
  * Progress bar
@@ -55,7 +55,7 @@ public class ProgressDialog {
 		frame.add(panel);
 		
 		// set application title
-		Config config = new Config();
+		GithubConfig config = new GithubConfig();
 		String frameTitle = config.getApplicationName();
 		if (frameTitle == null) {
 			frameTitle = "Update";

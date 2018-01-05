@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 
 import config.GithubChecker;
-import config.Config;
+import config.GithubConfig;
 
 public class OldVersionTracker {
 
@@ -16,7 +16,7 @@ public class OldVersionTracker {
 	 */
 	public void moveOldFiles() throws IOException {
 		
-		Config config = new Config();
+		GithubConfig config = new GithubConfig();
 		
 		String appFolder = config.getApplicationFolder();
 		
@@ -25,7 +25,7 @@ public class OldVersionTracker {
 		if (!app.exists())
 			throw new IOException("The application folder " + appFolder + " does not exist");
 		
-		String dbFolder = config.getValue(Config.APP_DB_FOLDER);
+		String dbFolder = config.getValue(GithubConfig.APP_DB_FOLDER);
 		String tempFolder = GithubChecker.TEMP_FOLDER_NAME;
 		
 		// for each file of the app folder
@@ -57,7 +57,7 @@ public class OldVersionTracker {
 			folder = folder.listFiles()[0];
 		}
 		
-		Config config = new Config();
+		GithubConfig config = new GithubConfig();
 		String appFolder = config.getApplicationFolder();
 		
 		// move the new files into the app folder

@@ -11,6 +11,8 @@ import java.util.List;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 
+import http.HttpManager;
+
 /**
  * Thread to download the latest release from an endpoing
  * in background, while a progress bar is shown.

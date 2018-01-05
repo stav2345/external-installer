@@ -3,10 +3,10 @@ package release;
 import java.io.File;
 import java.io.IOException;
 
-import config.Config;
+import config.GithubConfig;
 import config.GithubChecker;
 import dialog.ProgressDialog;
-import zip.ZipManager;
+import zip_manager.ZipManager;
 
 /**
  * Manage the application versions and updates.
@@ -28,10 +28,10 @@ public class VersionManager {
 		
 		if (lastRelease == null) {
 			
-			Config config = new Config();
+			GithubConfig config = new GithubConfig();
 			
-			String username = config.getValue(Config.REPOSITORY_OWNER);
-			String repo = config.getValue(Config.REPOSITORY_NAME);
+			String username = config.getValue(GithubConfig.REPOSITORY_OWNER);
+			String repo = config.getValue(GithubConfig.REPOSITORY_NAME);
 
 			GetLastRelease req = new GetLastRelease(username, repo);
 			lastRelease = req.get();
@@ -70,7 +70,7 @@ public class VersionManager {
 	}
 	
 	private File getInstallOkFile() {
-		Config config = new Config();
+		GithubConfig config = new GithubConfig();
 		String folder = config.getApplicationFolder();
 		String filePath = folder + INSTALL_OK_FILE;
 		File file = new File(filePath);
@@ -84,7 +84,7 @@ public class VersionManager {
 	 */
 	public boolean isOldVersion() throws IOException {
 
-		Config config = new Config();
+		GithubConfig config = new GithubConfig();
 		String currentVersion = config.getApplicationVersion();
 
 		// check if user has last version

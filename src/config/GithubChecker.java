@@ -41,7 +41,7 @@ public class GithubChecker {
 	public static void initialize() {
 		checkDir(TEMP_FOLDER);
 		
-		Config r = new Config();
+		GithubConfig r = new GithubConfig();
 		checkDir(r.getApplicationFolder());
 	}
 	

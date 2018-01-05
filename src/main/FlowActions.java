@@ -6,7 +6,7 @@ import java.net.UnknownHostException;
 
 import javax.swing.JOptionPane;
 
-import config.Config;
+import config.ProxyConfig;
 import dialog.Warning;
 import release.ProxyConfigException;
 import release.VersionManager;
@@ -105,7 +105,7 @@ public class FlowActions {
 	
 	private void showConnectionError() {
 		
-		Config config = new Config();
+		ProxyConfig config = new ProxyConfig();
 		
 		Warning.warnUser("Error", 
 				"ERROR: Cannot download the latest version of the tool. Check your connection.\n"
@@ -117,7 +117,7 @@ public class FlowActions {
 	
 	private void showConfigurationError(String proxyConfig) {
 		
-		Config config = new Config();
+		ProxyConfig config = new ProxyConfig();
 		
 		Warning.warnUser("Error", 
 				"ERROR: Invalid proxy hostname/port (" 

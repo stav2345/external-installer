@@ -2,6 +2,8 @@ package release;
 
 import java.io.IOException;
 
+import http.HttpManager;
+
 public class GetLastRelease {
 	
 	private static final String URL_PATTERN = "https://api.github.com/repos/:username/:repo/releases/latest";

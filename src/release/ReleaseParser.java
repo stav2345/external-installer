@@ -8,7 +8,7 @@ import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 
 import config.GithubChecker;
-import config.Config;
+import config.GithubConfig;
 
 public class ReleaseParser {
 
@@ -89,10 +89,10 @@ public class ReleaseParser {
 		
 		JsonArray assets = getAssets();
 		
-		Config config = new Config();
+		GithubConfig config = new GithubConfig();
 		
 		// keyword to identify the file that needs to be downloaded
-		String appKeyword = config.getValue(Config.APP_KEYWORD_NAME);
+		String appKeyword = config.getValue(GithubConfig.APP_KEYWORD_NAME);
 		
 		for (JsonValue value : assets) {
 			String assetName = value.asObject().getString("name", "");

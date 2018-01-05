@@ -3,7 +3,7 @@ package main;
 import java.io.File;
 import java.io.IOException;
 
-import config.Config;
+import config.GithubConfig;
 
 public class AppLauncherDelegate {
 
@@ -16,11 +16,11 @@ public class AppLauncherDelegate {
 		
 		// read jar relative path
 		
-		Config config = new Config();
+		GithubConfig config = new GithubConfig();
 		
 		String appPath = config.getApplicationFolder();
-		String jarName = config.getValue(Config.JAR_PATH);
-		String javaPath = config.getValue(Config.JAVA_PATH);
+		String jarName = config.getValue(GithubConfig.JAR_PATH);
+		String javaPath = config.getValue(GithubConfig.JAVA_PATH);
 		
 		System.out.println("Launching " + jarName 
 				+ " with java in " + javaPath 
