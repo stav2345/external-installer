@@ -6,6 +6,7 @@ import java.io.IOException;
 import config.GithubConfig;
 import config.GithubChecker;
 import dialog.ProgressDialog;
+import version_manager.VersionComparator;
 import zip_manager.ZipManager;
 
 /**
@@ -112,36 +113,17 @@ public class VersionManager {
 		String currentVersion = getCurrentAppVersion();
 		String latestVersion = getLatestOfficialVersion();
 		
-		String[] current = currentVersion.split("\\.");
-		String[] latest = latestVersion.split("\\.");
+		VersionComparator versionComparator = new VersionComparator();
+		int compare = versionComparator.compare(currentVersion, latestVersion);
 		
-		boolean isOld = false;
-		for (int i = 0; i < Math.min(latest.length, current.length); ++i) {
+		if (compare == -1) {
 			
-			// if a number is not found, the default is 0
-			int currentNum = i < current.length ? Integer.parseInt(current[i]) : 0;
-			int latestNum = i < latest.length ? Integer.parseInt(latest[i]) : 0;
-			
-			if (currentNum == latestNum)
-				continue;
-			
-			if (currentNum < latestNum) {
-				isOld = true;
-				break;
-			}
-			else {
-				isOld = false;
-				break;
-			}
-		}
-		
-		if (isOld) {
 			System.out.println("Need update " + currentVersion 
 				+ " => " + latestVersion);
+			return true;
 		}
 		
-		// if we have a older version ask for downloading the last
-		return isOld;
+		return false;
 	}
 	
 	/**
