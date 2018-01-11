@@ -78,19 +78,39 @@ public class VersionManager {
 	}
 	
 	/**
+	 * Get the version of the application which is already installed
+	 * in the user machine
+	 * @return
+	 */
+	public String getCurrentAppVersion() {
+		GithubConfig config = new GithubConfig();
+		String currentVersion = config.getApplicationVersion();
+		return currentVersion;
+	}
+	
+	/**
+	 * Get the latest released version published on github
+	 * @return
+	 * @throws IOException
+	 */
+	public String getLatestOfficialVersion() throws IOException {
+
+		ReleaseParser parser = getParserInstance();
+
+		String latestVersion = parser.getVersion();
+		
+		return latestVersion;
+	}
+	
+	/**
 	 * Check if the user has the latest version or not
 	 * @return
 	 * @throws IOException
 	 */
 	public boolean isOldVersion() throws IOException {
 
-		GithubConfig config = new GithubConfig();
-		String currentVersion = config.getApplicationVersion();
-
-		// check if user has last version
-		ReleaseParser parser = getParserInstance();
-
-		String latestVersion = parser.getVersion();
+		String currentVersion = getCurrentAppVersion();
+		String latestVersion = getLatestOfficialVersion();
 		
 		String[] current = currentVersion.split("\\.");
 		String[] latest = latestVersion.split("\\.");
@@ -107,6 +127,10 @@ public class VersionManager {
 			
 			if (currentNum < latestNum) {
 				isOld = true;
+				break;
+			}
+			else {
+				isOld = false;
 				break;
 			}
 		}

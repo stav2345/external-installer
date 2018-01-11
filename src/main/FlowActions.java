@@ -36,8 +36,14 @@ public class FlowActions {
 
 		// if there is a working application
 		boolean isOld = false;
+		String current = null;
+		String official = null;
 		try {
 			isOld = check.isOldVersion();
+			if (isOld) {
+				current = check.getCurrentAppVersion();
+				official = check.getLatestOfficialVersion();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 			launchApp();
@@ -51,7 +57,7 @@ public class FlowActions {
 		}
 		
 		// ask user for installing
-		boolean installApp = askConfirmationForInstall();
+		boolean installApp = askConfirmationForInstall(current, official);
 
 		// if no is chosen, open standard app
 		if (!installApp) {
@@ -71,12 +77,13 @@ public class FlowActions {
 	 * Do you want to install the latest version?
 	 * @return
 	 */
-	private boolean askConfirmationForInstall() {
+	private boolean askConfirmationForInstall(String current, String official) {
 		
 		// ask for installing the new version
 		// otherwise ask for downloading it
 		int val = Warning.askUser("Update needed!", 
-				"An update of the tool is available. Do you want to download it?", 
+				"An update of the tool is available ("
+						+ current + " => " + official + ")" + ". Do you want to download it?", 
 				JOptionPane.INFORMATION_MESSAGE | JOptionPane.YES_NO_OPTION);
 		
 		return val == JOptionPane.YES_OPTION;
