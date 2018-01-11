@@ -37,3 +37,9 @@ to retrieve the current version of the application.
 * Application.VersionEntry: the entry which contains the version of the application inside the Application.ConfigFile file
 * Application.IconEntry: the entry which contains the filename of the icon of the application inside the Application.ConfigFile file
 * Application.DatabaseFolder: the name of the folder inside the Application.Folder which contains the database of the application (this will not be deleted with the new releases!)
+
+# Dependencies
+The project needs the following projects to work properly:
+* https://github.com/openefsa/zip-manager
+* https://github.com/openefsa/http-manager
+* https://github.com/openefsa/version-manager
