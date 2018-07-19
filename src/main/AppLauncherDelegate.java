@@ -29,7 +29,7 @@ public class AppLauncherDelegate {
 		// start the jar
 		
 		// "-XstartOnFirstThread",  for mac
-		ProcessBuilder pb = new ProcessBuilder(javaPath, "-jar", jarName);
+		ProcessBuilder pb = new ProcessBuilder(javaPath, "-Xmx1024m", "-jar", jarName);
 		
 		// set the new working directory
 		pb.directory(new File(appPath));
