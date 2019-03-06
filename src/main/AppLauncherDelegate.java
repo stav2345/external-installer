@@ -2,7 +2,6 @@ package main;
 
 import java.io.File;
 import java.io.IOException;
-
 import config.GithubConfig;
 
 public class AppLauncherDelegate {
@@ -26,18 +25,18 @@ public class AppLauncherDelegate {
 				+ " with java in " + javaPath 
 				+ " from folder " + appPath);
 		
-		// start the jar
+		// shahaal: this parameters set the heap size of the application and 
+		String parameters = "-Xms124m -Xmx1024m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:InitiatingHeapOccupancyPercent=45 -XX:NewRatio=1 -XX:SurvivorRatio=6 -XX:G1ReservePercent=10 -XX:G1HeapRegionSize=32m -XX:+HeapDumpOnOutOfMemoryError";
 		
 		// "-XstartOnFirstThread",  for mac
-		//ProcessBuilder pb = new ProcessBuilder(javaPath, "-Xmx1024m", "-jar", jarName); //uncomment for 32bit version
-		ProcessBuilder pb = new ProcessBuilder(javaPath, "-Xmx2048m", "-jar", jarName); //uncomment for 64bit version
+		ProcessBuilder pb = new ProcessBuilder(javaPath, parameters, "-jar", jarName); //for 32/64 bit version
 		
 		// set the new working directory
 		pb.directory(new File(appPath));
 		
 		// inherit console
 		pb.inheritIO();
-		
+
 		// start the process
 		Process p = pb.start();
 		
