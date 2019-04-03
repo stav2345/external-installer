@@ -26,10 +26,10 @@ public class AppLauncherDelegate {
 				+ " from folder " + appPath);
 		
 		// shahaal: this parameters set the heap size of the application and 
-		String parameters = "-Xms124m -Xmx1024m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:InitiatingHeapOccupancyPercent=45 -XX:NewRatio=1 -XX:SurvivorRatio=6 -XX:G1ReservePercent=10 -XX:G1HeapRegionSize=32m -XX:+HeapDumpOnOutOfMemoryError";
+		// String parameters = "-Xms124m -Xmx1024m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:InitiatingHeapOccupancyPercent=45 -XX:NewRatio=1 -XX:SurvivorRatio=6 -XX:G1ReservePercent=10 -XX:G1HeapRegionSize=32m -XX:+HeapDumpOnOutOfMemoryError";
 		
 		// "-XstartOnFirstThread",  for mac
-		ProcessBuilder pb = new ProcessBuilder(javaPath, parameters, "-jar", jarName); //for 32/64 bit version
+		ProcessBuilder pb = new ProcessBuilder(javaPath, "-jar", jarName); //for 32/64 bit version
 		
 		// set the new working directory
 		pb.directory(new File(appPath));
