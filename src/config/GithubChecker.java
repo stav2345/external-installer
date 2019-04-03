@@ -7,14 +7,27 @@ import org.apache.commons.io.FileUtils;
 
 /**
  * General settings and start up checks
+ * @author shahaal
  * @author avonva
  *
  */
 public class GithubChecker {
 	
+	// template folder name
 	public static final String TEMP_FOLDER_NAME = "temp";
-	public static final String TEMP_FOLDER = TEMP_FOLDER_NAME + System.getProperty("file.separator");
-	public static final String DEFAULT_VERSION = "0.0.0";  // default version used if no version is found
+	// default version used if no version is found
+	public static final String DEFAULT_VERSION = "0.0.0";
+	
+	/**
+	 * return the temp folder path in AppData
+	 * @author shahaal
+	 * @return
+	 */
+	public static String getTempFolder() {
+		return GithubConfig.getCbFolder() 
+				+ System.getProperty("file.separator")+TEMP_FOLDER_NAME 
+				+ System.getProperty("file.separator");
+	}
 	
 	/**
 	 * Check if a directory exists. If not create it.
@@ -32,17 +45,20 @@ public class GithubChecker {
 			boolean created = file.mkdir();
 			
 			if (!created) {
-				System.err.println("Cannot create temp directory");
+				System.err.println("Cannot create "+dirName+" directory");
 				return;
 			}
 		}
 	}
 	
+	/**
+	 * check the esistence of the app and the temp folder
+	 * @author shahaal
+	 */
 	public static void initialize() {
-		checkDir(TEMP_FOLDER);
-		
-		GithubConfig r = new GithubConfig();
-		checkDir(r.getApplicationFolder());
+		// check app and temp folder
+		checkDir(GithubConfig.getCbFolder());
+		checkDir(getTempFolder());
 	}
 	
 	/**
@@ -50,12 +66,12 @@ public class GithubChecker {
 	 * @throws IOException
 	 */
 	public static void clearTemp() throws IOException {
-		File src = new File(TEMP_FOLDER);
+		File src = new File(getTempFolder());
 		for (File file : src.listFiles())
 			FileUtils.forceDelete(file);
 	}
 	
 	public static String newTempFile(String format) {
-		return TEMP_FOLDER + System.getProperty("file.separator") + "temp_" + System.currentTimeMillis() + "." + format;
+		return getTempFolder() + "temp_" + System.currentTimeMillis() + "." + format;
 	}
 }

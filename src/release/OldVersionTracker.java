@@ -18,7 +18,7 @@ public class OldVersionTracker {
 		
 		GithubConfig config = new GithubConfig();
 		
-		String appFolder = config.getApplicationFolder();
+		String appFolder = GithubConfig.getCbFolder();
 		
 		File app = new File(appFolder);
 		
@@ -57,8 +57,7 @@ public class OldVersionTracker {
 			folder = folder.listFiles()[0];
 		}
 		
-		GithubConfig config = new GithubConfig();
-		String appFolder = config.getApplicationFolder();
+		String appFolder = GithubConfig.getCbFolder();
 		
 		// move the new files into the app folder
 		for (File file : folder.listFiles()) {

@@ -14,6 +14,9 @@ public class GithubConfig {
 	
 	private static final String CONFIG_PATH = "config/githubConfig.xml";
 	
+	private static final String USR_LOCAL_APPDATA_PATH = System.getProperty("user.home") + "\\AppData\\Local\\";
+	private static final String CB_FOLDER_NAME = "EFSA_Cataloge_browser";
+	private static final String TSE_FOLDER_NAME = "EFSA_TSE";
 	public static final String JAVA_PATH = "Application.JavaPath";
 	public static final String REPOSITORY_NAME = "Github.RepositoryName";
 	public static final String REPOSITORY_OWNER = "Github.RepositoryOwner";
@@ -47,14 +50,54 @@ public class GithubConfig {
 		return getAppConfigEntry(APP_NAME_ENTRY);
 	}
 	
-	public String getApplicationFolder() {
-		String appFolder = getValue(APP_FOLDER);
-		return appFolder + System.getProperty("file.separator");
+	/**
+	 * the method return the Catalogue browser folder 
+	 * located into the user appdata
+	 * @author shahaal
+	 * @return
+	 */
+	public static String getCbFolder() {
+		return USR_LOCAL_APPDATA_PATH+CB_FOLDER_NAME;
+	}
+	
+	/**
+	 * the method return the TSE folder 
+	 * located into the user appdata
+	 * @author shahaal
+	 * @return
+	 */
+	public static String getTseFolder() {
+		return USR_LOCAL_APPDATA_PATH+TSE_FOLDER_NAME;
+	}
+	
+	/**
+	 * get the cb app folder
+	 * @author shahaal
+	 * @return
+	 */
+	public String getCbAppFolder() {
+		return getCbFolder()+ System.getProperty("file.separator")+getValue(APP_FOLDER);
+	}
+	
+	/**
+	 * get the java path from the executable file location
+	 * @return
+	 */
+	public String getJavaPathDir() {
+		return System.getProperty("user.dir") + System.getProperty("file.separator")+getValue(JAVA_PATH);
+	}
+	
+	/**
+	 * get the tse app folder
+	 * @author shahaal
+	 * @return
+	 */
+	public String getTseAppFolder() {
+		return getTseFolder()+ System.getProperty("file.separator")+getValue(APP_FOLDER);
 	}
 	
 	public String getJarPath() {
-		String appFolder = getApplicationFolder();
-		return appFolder + getValue(JAR_PATH);
+		return getValue(JAR_PATH);
 	}
 	
 	/**
@@ -62,13 +105,13 @@ public class GithubConfig {
 	 * @return
 	 */
 	public String getApplicationIconPath() {
-		String appFolder = getValue(APP_FOLDER) + System.getProperty("file.separator");
+		String appFolder = getCbFolder() + System.getProperty("file.separator");
 		String iconFolder = getValue(APP_ICON_FOLDER) + System.getProperty("file.separator");
 		return appFolder + iconFolder + getAppConfigEntry(APP_ICON);
 	}
 	
 	private String getAppConfigEntry(String appEntry) {
-		String appFolder = getValue(APP_FOLDER);
+		String appFolder = getCbFolder();
 		String appConfigFile = getValue(APP_CONFIG_FILE);
 		String appConfigEntry = getValue(appEntry);
 		

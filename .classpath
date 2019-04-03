@@ -6,11 +6,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry excluding="**" kind="src" output="target/classes" path="log4j-config">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="src" path="log4j-config"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/HttpManager"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/VersionManager"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ZipManager"/>

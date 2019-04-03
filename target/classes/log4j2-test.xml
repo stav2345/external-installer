@@ -6,6 +6,7 @@
 			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
 		</Console>
 
+		<!-- uncomment the RollingFile element for publication on Software center
 		<RollingFile name="File" filename="logs/latest.efsa.log"
 			filePattern="logs/$${date:yyyy-MM-dd-HH-mm-ss}.efsa.log">
 			<PatternLayout>
@@ -13,7 +14,7 @@
 			</PatternLayout>
 			
 			<Policies>
-				<OnStartupTriggeringPolicy /> <!-- Every time that the application is run, a new log file is created -->
+				<OnStartupTriggeringPolicy /> Every time that the application is run, a new log file is created
 			</Policies>
 			
 			<DefaultRolloverStrategy>
@@ -22,12 +23,12 @@
 				</Delete>
 			</DefaultRolloverStrategy>
 		</RollingFile>
-
+		-->
 	</Appenders>
 	<Loggers>
-		<Root level="debug">
+		<Root level="info">
 			<AppenderRef ref="Console" />
-			<AppenderRef ref="File" />
+			<!-- <AppenderRef ref="File" /> -->
 		</Root>
 	</Loggers>
 </Configuration>
