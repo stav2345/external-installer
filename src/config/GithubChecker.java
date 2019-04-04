@@ -17,16 +17,18 @@ public class GithubChecker {
 	public static final String TEMP_FOLDER_NAME = "temp";
 	// default version used if no version is found
 	public static final String DEFAULT_VERSION = "0.0.0";
+	// temp folder path
+	public static String TEMP_FOLDER_PATH = "";
 	
 	/**
 	 * return the temp folder path in AppData
 	 * @author shahaal
 	 * @return
 	 */
-	public static String getTempFolder() {
-		return GithubConfig.getCbFolder() 
-				+ System.getProperty("file.separator")+TEMP_FOLDER_NAME 
-				+ System.getProperty("file.separator");
+	public static void setTempFolder(String appPath) {
+		TEMP_FOLDER_PATH = appPath + 
+				System.getProperty("file.separator")+TEMP_FOLDER_NAME + 
+				System.getProperty("file.separator");
 	}
 	
 	/**
@@ -56,22 +58,26 @@ public class GithubChecker {
 	 * @author shahaal
 	 */
 	public static void initialize() {
+		
+		GithubConfig config = new GithubConfig();
+		String appPath = config.getAppPath();
+		setTempFolder(appPath);
 		// check app and temp folder
-		checkDir(GithubConfig.getCbFolder());
-		checkDir(getTempFolder());
+		checkDir(appPath);
+		checkDir(TEMP_FOLDER_PATH);
 	}
-	
+
 	/**
 	 * Delete all the temporary files
 	 * @throws IOException
 	 */
 	public static void clearTemp() throws IOException {
-		File src = new File(getTempFolder());
+		File src = new File(TEMP_FOLDER_PATH);
 		for (File file : src.listFiles())
 			FileUtils.forceDelete(file);
 	}
 	
 	public static String newTempFile(String format) {
-		return getTempFolder() + "temp_" + System.currentTimeMillis() + "." + format;
+		return TEMP_FOLDER_PATH + "temp_" + System.currentTimeMillis() + "." + format;
 	}
 }

@@ -12,6 +12,7 @@ import zip_manager.ZipManager;
 /**
  * Manage the application versions and updates.
  * @author avonva
+ * @author shahaal
  *
  */
 public class VersionManager {
@@ -71,7 +72,8 @@ public class VersionManager {
 	}
 	
 	private File getInstallOkFile() {
-		String folder = GithubConfig.getCbFolder();
+		GithubConfig config = new GithubConfig();
+		String folder = config.getAppPath();
 		String filePath = folder + INSTALL_OK_FILE;
 		File file = new File(filePath);
 		return file;
@@ -135,6 +137,7 @@ public class VersionManager {
 		ReleaseParser parser = getParserInstance();
 		String endpoint = parser.getDownloadUrl();
 		int contentLength = parser.getSize();
+		
 		
 		// outputfile in temp folder
 		String attachmentFilename = GithubChecker.newTempFile("zip");

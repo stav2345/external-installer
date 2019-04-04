@@ -16,7 +16,7 @@ public class AppLauncherDelegate {
 		// get the paths
 		GithubConfig config = new GithubConfig();
 		
-		String appPath = GithubConfig.getCbFolder();
+		String appPath = config.getAppPath();
 		String jarName = config.getValue(GithubConfig.JAR_PATH);
 		String javaPath = config.getValue(GithubConfig.JAVA_PATH);
 		

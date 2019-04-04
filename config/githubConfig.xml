@@ -9,7 +9,7 @@
 
 <entry key="Application.Keyword">onlyapp-win-64bit</entry> <!-- keyword which needs to be contained in the .zip filename for identifying the file to be downloaded from github -->
 
-<entry key="Application.Folder">app</entry> <!-- path of the folder which contains the application to start after updates checking -->
+<entry key="Application.Folder">EFSA_Catalogue_browser_x64bit</entry> <!-- path of the main folder which contains all the application -->
 <entry key="Application.ConfigFile">config\appConfig.xml</entry> <!-- configuration file of the real application (starting from the real application directory) -->
 <entry key="Application.JarPath">app.jar</entry> <!-- path of the jar to execute after having checked the updates -->
 <entry key="Application.IconFolder">icons</entry> <!-- folder of the application icons -->
