@@ -7,29 +7,14 @@ import org.apache.commons.io.FileUtils;
 
 /**
  * General settings and start up checks
- * @author shahaal
  * @author avonva
  *
  */
 public class GithubChecker {
 	
-	// template folder name
 	public static final String TEMP_FOLDER_NAME = "temp";
-	// default version used if no version is found
-	public static final String DEFAULT_VERSION = "0.0.0";
-	// temp folder path
-	public static String TEMP_FOLDER_PATH = "";
-	
-	/**
-	 * return the temp folder path in AppData
-	 * @author shahaal
-	 * @return
-	 */
-	public static void setTempFolder(String appPath) {
-		TEMP_FOLDER_PATH = appPath + 
-				System.getProperty("file.separator")+TEMP_FOLDER_NAME + 
-				System.getProperty("file.separator");
-	}
+	public static final String TEMP_FOLDER = TEMP_FOLDER_NAME + System.getProperty("file.separator");
+	public static final String DEFAULT_VERSION = "0.0.0";  // default version used if no version is found
 	
 	/**
 	 * Check if a directory exists. If not create it.
@@ -47,37 +32,30 @@ public class GithubChecker {
 			boolean created = file.mkdir();
 			
 			if (!created) {
-				System.err.println("Cannot create "+dirName+" directory");
+				System.err.println("Cannot create temp directory");
 				return;
 			}
 		}
 	}
 	
-	/**
-	 * check the esistence of the app and the temp folder
-	 * @author shahaal
-	 */
 	public static void initialize() {
+		checkDir(TEMP_FOLDER);
 		
-		GithubConfig config = new GithubConfig();
-		String appPath = config.getAppPath();
-		setTempFolder(appPath);
-		// check app and temp folder
-		checkDir(appPath);
-		checkDir(TEMP_FOLDER_PATH);
+		GithubConfig r = new GithubConfig();
+		checkDir(r.getApplicationFolder());
 	}
-
+	
 	/**
 	 * Delete all the temporary files
 	 * @throws IOException
 	 */
 	public static void clearTemp() throws IOException {
-		File src = new File(TEMP_FOLDER_PATH);
+		File src = new File(TEMP_FOLDER);
 		for (File file : src.listFiles())
 			FileUtils.forceDelete(file);
 	}
 	
 	public static String newTempFile(String format) {
-		return TEMP_FOLDER_PATH + "temp_" + System.currentTimeMillis() + "." + format;
+		return TEMP_FOLDER + System.getProperty("file.separator") + "temp_" + System.currentTimeMillis() + "." + format;
 	}
 }

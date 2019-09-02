@@ -5,12 +5,12 @@ import javax.swing.JOptionPane;
 import config.GithubChecker;
 import dialog.Warning;
 
-public class StartUI {
+public class GeneralLauncherMain {
 
 	public static void main(String[] args) {
 
 		try {
-			// initialize the library
+			// initialise the library
 			GithubChecker.initialize();
 			
 			FlowActions actions = new FlowActions();

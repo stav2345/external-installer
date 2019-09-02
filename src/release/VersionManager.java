@@ -12,12 +12,11 @@ import zip_manager.ZipManager;
 /**
  * Manage the application versions and updates.
  * @author avonva
- * @author shahaal
  *
  */
 public class VersionManager {
 
-	private final static String INSTALL_OK_FILE = "\\install.ok";
+	private final static String INSTALL_OK_FILE = "install.ok";
 	private String lastRelease;
 	private ReleaseParser parser;
 
@@ -73,7 +72,7 @@ public class VersionManager {
 	
 	private File getInstallOkFile() {
 		GithubConfig config = new GithubConfig();
-		String folder = config.getAppPath();
+		String folder = config.getApplicationFolder();
 		String filePath = folder + INSTALL_OK_FILE;
 		File file = new File(filePath);
 		return file;
@@ -138,7 +137,6 @@ public class VersionManager {
 		String endpoint = parser.getDownloadUrl();
 		int contentLength = parser.getSize();
 		
-		
 		// outputfile in temp folder
 		String attachmentFilename = GithubChecker.newTempFile("zip");
 		
@@ -181,7 +179,6 @@ public class VersionManager {
 		
 		// download zip of the release
 		String newVersionFilename = this.downloadLastRelease();
-		
 		String unzippedFolder = newVersionFilename + "_unzipped";
 		
 		// extract the zip file
@@ -193,7 +190,6 @@ public class VersionManager {
 		tracker.moveNewFiles(unzippedFolder);
 		
 		createInstallOkFile();
-		
 	}
 	
 	/**
