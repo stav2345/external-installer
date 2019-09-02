@@ -7,7 +7,7 @@
 <entry key="Github.RepositoryOwner">openefsa</entry> <!-- github username of who created the repository -->
 <entry key="Application.JavaPath">.\jre1.8.0_221\bin\java.exe</entry> <!-- java path, use simply "java" without quotes to use the java installed in your machine (starts from the app folder!) -->
 
-<entry key="Application.Keyword">onlyapp-win-32bit</entry> <!-- keyword which needs to be contained in the .zip filename for identifying the file to be downloaded from github -->
+<entry key="Application.Keyword">onlyapp-win-64bit</entry> <!-- keyword which needs to be contained in the .zip filename for identifying the file to be downloaded from github -->
 
 <entry key="Application.Folder">app</entry> <!-- path of the folder which contains the application to start after updates checking -->
 <entry key="Application.ConfigFile">config\appConfig.xml</entry> <!-- configuration file of the real application (starting from the real application directory) -->
@@ -20,5 +20,5 @@
 <entry key="Application.IconEntry">Application.Icon</entry> <!-- entry of the configuration file of the real app which contains the application icon -->
 
 <!-- List of names used to avoid their removal while updating the new tool version -->
-<entry key="Application.DatabaseFolder">Database</entry> <!-- folder in which there is the database of the application -->
+<entry key="Application.DatabaseFolder">database</entry> <!-- folder in which there is the database of the application -->
 </properties>
