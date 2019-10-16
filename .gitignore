@@ -19,4 +19,8 @@ local.properties
 war/WEB-INF/deploy/
 war/WEB-INF/classes/
 
+*.MF
+
+*log4j*.xml
+
 build
