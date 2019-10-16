@@ -34,7 +34,7 @@ public class OldVersionTracker {
 			String filename = file.getName();
 			
 			// skip the database/temp/jre folders and github jar
-			if (filename.equals(dbFolder) || filename.equals(tempFolder))
+			if (filename.equalsIgnoreCase(dbFolder) || filename.equals(tempFolder))
 				continue;
 			
 			// move file into the old folder
