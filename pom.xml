@@ -2,8 +2,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>external-installer</groupId>
-	<artifactId>external-installer</artifactId>
+	<groupId>openefsa</groupId>
+	<artifactId>external-installer-new</artifactId>
 	<version>1.0.0</version>
 
 	<properties>
@@ -12,60 +12,16 @@
 		<project.build.sourceEncoding>Cp1252</project.build.sourceEncoding>
 	</properties>
 
-	<build>
-		<sourceDirectory>src</sourceDirectory>
-		<resources>
-			<resource>
-				<directory>log4j-config</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-		</resources>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
-			</plugin>
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>main.GeneralLauncherMain</mainClass>
-						</manifest>
-					</archive>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
 	<dependencies>
 		<dependency>
-			<groupId>version_manager</groupId>
-			<artifactId>VersionManager</artifactId>
-			<version>[1.0.0,)</version>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>[2.11.1,)</version>
 		</dependency>
 		<dependency>
-			<groupId>HttpManager</groupId>
-			<artifactId>HttpManager</artifactId>
-			<version>[1.0.0,)</version>
-		</dependency>
-		<dependency>
-			<groupId>ZipManager</groupId>
-			<artifactId>ZipManager</artifactId>
-			<version>[1.0.0,)</version>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>[2.11.1,)</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -77,5 +33,45 @@
 			<artifactId>minimal-json</artifactId>
 			<version>[0.9.5,)</version>
 		</dependency>
+		<dependency>
+			<groupId>openefsa</groupId>
+			<artifactId>version-manager</artifactId>
+			<version>[1.0.0,)</version>
+		</dependency>
+		<dependency>
+			<groupId>openefsa</groupId>
+			<artifactId>http-manager</artifactId>
+			<version>[1.0.0,)</version>
+		</dependency>
+		<dependency>
+			<groupId>openefsa</groupId>
+			<artifactId>zip-manager</artifactId>
+			<version>[1.0.0,)</version>
+		</dependency>
 	</dependencies>
+
+	<build>
+
+		<sourceDirectory>src/main/java</sourceDirectory>
+
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>2.0.0</version>
+				<executions>
+					<execution>
+						<id>aggregate-download-licenses</id>
+						<goals>
+							<goal>aggregate-download-licenses</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
