@@ -1,12 +1,40 @@
-# Github release checker
-This is a library is a wrapper (i.e. it wraps a generic application) which can be used to check if new versions of an application are released (in a github repository). In particular, it is sufficient to configure
-the config/githubConfig.xml file to use the library (no technical capabilities needed!).
+<p align="center">
+	<img src="http://www.efsa.europa.eu/profiles/efsa/themes/responsive_efsa/logo.png" alt="European Food Safety Authority"/>
+</p>
 
-In particular, it checks if there is a new release each time the application
-is launched. If a new release is present, then it asks the user if he/she wants to download the updated software. In that case, the old version is replaced with the 
-new one (maintaining some special folders which should not be lost while updating, as the database).
+# External installer
+This maven project module, written in Java, can be used for launching the tool. In addition the module also checks, each time is launched, if new versions of the application are released in the GitHub repository.
+If a new release is present, then it asks the user if to download the updated software.
+In that case, the old version is replaced with the new one (maintaining some special folders which should not be lost while updating, as the database).
+The installer can be configured by setting up correctly the "config/githubConfig.xml" file.
 
-If no version is present while launching the application, the library will install the latest release without asking anything.
+_Please note that if no version is present while launching the application, the library will install the latest release without asking anything._
+
+## Dependencies
+All project dependencies are listed in the [pom.xml](pom.xml) file.
+
+## Import the project
+In order to import the project correctly into the integrated development environment (e.g. Eclipse), it is necessary to download the project together with all its dependencies.
+The project and all its dependencies are based on the concept of "project object model" and hence Apache Maven is used for the specific purpose.
+In order to correctly import the project into the IDE it is firstly required to create a parent POM Maven project (check the following [link](https://maven.apache.org/guides/introduction/introduction-to-the-pom.html) for further information). 
+Once the parent project has been created add the project and all the dependencies as "modules" into the pom.xml file as shown below: 
+
+	<modules>
+
+		<!-- dependency modules -->
+		<module>module_1</module>
+		...
+		...
+		...
+		<module>module_n</module>
+		
+	</modules>
+	
+Next, close the IDE and extract all the zip packets inside the parent project.
+At this stage you can simply open the IDE and import back the parent project which will automatically import also the project and all its dependencies.
+
+_Please note that the "SWT.jar" and the "Jface.jar" libraries (if used) must be downloaded and installed manually in the Maven local repository since are custom versions used in the tool ((install 3rd party jars)[https://maven.apache.org/guides/mini/guide-3rd-party-jars-local.html]). 
+Download the exact version by checking the Catalogue browser pom.xml file._
 
 ## Project structure
 
@@ -37,9 +65,3 @@ to retrieve the current version of the application.
 * Application.VersionEntry: the entry which contains the version of the application inside the Application.ConfigFile file
 * Application.IconEntry: the entry which contains the filename of the icon of the application inside the Application.ConfigFile file
 * Application.DatabaseFolder: the name of the folder inside the Application.Folder which contains the database of the application (this will not be deleted with the new releases!)
-
-# Dependencies
-The project needs the following projects to work properly:
-* https://github.com/openefsa/zip-manager
-* https://github.com/openefsa/http-manager
-* https://github.com/openefsa/version-manager
