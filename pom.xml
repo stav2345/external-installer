@@ -2,9 +2,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>openefsa</groupId>
+	<parent>
+		<groupId>openefsa</groupId>
+		<artifactId>all-projects</artifactId>
+		<version>${global.version}</version>
+	</parent>
 	<artifactId>external-installer</artifactId>
-	<version>1.0.0</version>
 
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -16,17 +19,14 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
-			<version>[2.11.1,)</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
-			<version>[2.11.1,)</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>[2.6,)</version>
 		</dependency>
 		<dependency>
 			<groupId>com.eclipsesource.minimal-json</groupId>
@@ -36,42 +36,54 @@
 		<dependency>
 			<groupId>openefsa</groupId>
 			<artifactId>version-manager</artifactId>
-			<version>[1.0.0,)</version>
+			<version>${global.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>openefsa</groupId>
 			<artifactId>http-manager</artifactId>
-			<version>[1.0.0,)</version>
+			<version>${global.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>openefsa</groupId>
 			<artifactId>zip-manager</artifactId>
-			<version>[1.0.0,)</version>
+			<version>${global.version}</version>
 		</dependency>
 	</dependencies>
 
 	<build>
-
 		<sourceDirectory>src/main/java</sourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+			</testResource>
+		</testResources>
 
 		<plugins>
 			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>license-maven-plugin</artifactId>
-				<version>2.0.0</version>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>main.GeneralLauncherMain</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
 				<executions>
 					<execution>
-						<id>aggregate-download-licenses</id>
+						<id>make-assembly</id> <!-- this is used for inheritance merges -->
+						<phase>package</phase> <!-- bind to the packaging phase -->
 						<goals>
-							<goal>aggregate-download-licenses</goal>
+							<goal>single</goal>
 						</goals>
-						<configuration>
-							<licensesOutputDirectory>third-party-license</licensesOutputDirectory>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
