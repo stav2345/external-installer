@@ -10,6 +10,8 @@ The installer can be configured by setting up correctly the "config/githubConfig
 
 _Please note that if no version is present while launching the application, the library will install the latest release without asking anything._
 
+_**Please note that the external installer differs from the internal installer in that it contains the JRE included in the root folder and saves the application information directly in the folder where the installer is located.**_
+
 ## Dependencies
 All project dependencies are listed in the [pom.xml](pom.xml) file.
 
