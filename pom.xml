@@ -2,11 +2,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>openefsa</groupId>
-		<artifactId>all-projects</artifactId>
-		<version>${global.version}</version>
-	</parent>
+	<groupId>openefsa</groupId>
+	<version>1.0</version>
 	<artifactId>external-installer</artifactId>
 
 	<properties>
@@ -29,26 +26,12 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
+			<version>[2.6,)</version>
 		</dependency>
 		<dependency>
 			<groupId>com.eclipsesource.minimal-json</groupId>
 			<artifactId>minimal-json</artifactId>
 			<version>[0.9.5,)</version>
-		</dependency>
-		<dependency>
-			<groupId>openefsa</groupId>
-			<artifactId>version-manager</artifactId>
-			<version>${global.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>openefsa</groupId>
-			<artifactId>http-manager</artifactId>
-			<version>${global.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>openefsa</groupId>
-			<artifactId>zip-manager</artifactId>
-			<version>${global.version}</version>
 		</dependency>
 	</dependencies>
 
