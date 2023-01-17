@@ -5,7 +5,7 @@
 
 <entry key="Github.RepositoryName">catalogue-browser</entry> <!-- name of the repository you want to connect/download -->
 <entry key="Github.RepositoryOwner">openefsa</entry> <!-- github username of who created the repository -->
-<entry key="Application.JavaPath">.\jre1.8.0_221_x86\bin\java.exe</entry> <!-- java path, use simply "java" without quotes to use the java installed in your machine (starts from the app folder!) -->
+<entry key="Application.JavaPath">.\jre_x86\bin\java.exe</entry> <!-- java path, use simply "java" without quotes to use the java installed in your machine (starts from the app folder!) -->
 
 <entry key="Application.Keyword">onlyapp-win-32bit</entry> <!-- keyword which needs to be contained in the .zip filename for identifying the file to be downloaded from github -->
 
