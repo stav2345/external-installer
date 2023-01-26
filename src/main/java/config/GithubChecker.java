@@ -5,6 +5,9 @@ import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * General settings and start up checks
  * 
@@ -13,6 +16,8 @@ import org.apache.commons.io.FileUtils;
  *
  */
 public class GithubChecker {
+	
+	private static final Logger LOGGER = LogManager.getLogger(GithubChecker.class);
 
 	public static final String TEMP_FOLDER_NAME = "temp";
 	public static final String TEMP_FOLDER = TEMP_FOLDER_NAME + System.getProperty("file.separator");
@@ -28,14 +33,14 @@ public class GithubChecker {
 		// create temporary folder if needed
 		File file = new File(dirName);
 
-		System.out.println("Creating " + dirName);
+		LOGGER.info("Creating directory with name: " + dirName);
 
 		// create the directory
 		if (!file.exists()) {
 			boolean created = file.mkdir();
 
 			if (!created) {
-				System.err.println("Cannot create temp directory");
+				LOGGER.error("Cannot create temp directory");
 				return;
 			}
 		}
@@ -57,6 +62,7 @@ public class GithubChecker {
 		File src = new File(TEMP_FOLDER);
 		for (File file : src.listFiles())
 			FileUtils.forceDelete(file);
+		LOGGER.info("The temp files have been deleted successfully");
 	}
 
 	public static String newTempFile(String format) {

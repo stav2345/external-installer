@@ -5,12 +5,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Class to read an xml used to store the properties
  * @author avonva
  *
  */
 public class GithubConfig {
+	
+	private static final Logger LOGGER = LogManager.getLogger(GithubConfig.class);
 	
 	private static final String CONFIG_PATH = "config/githubConfig.xml";
 	
@@ -88,7 +93,8 @@ public class GithubConfig {
 			properties.loadFromXML(stream);
 		}
 		catch (IOException e) {
-			System.err.println("The " + filename + " file was not found. Please check!");
+			LOGGER.error("The " + filename + " file was not found. Please check!");
+	        e.printStackTrace();
 		}
 
 		return properties;

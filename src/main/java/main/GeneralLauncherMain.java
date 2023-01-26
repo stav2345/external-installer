@@ -5,7 +5,12 @@ import javax.swing.JOptionPane;
 import config.GithubChecker;
 import dialog.Warning;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class GeneralLauncherMain {
+	
+	private static final Logger LOGGER = LogManager.getLogger(GeneralLauncherMain.class);
 
 	public static void main(String[] args) {
 
@@ -17,6 +22,7 @@ public class GeneralLauncherMain {
 			actions.start();
 		}
 		catch (Exception e) {
+			LOGGER.error("Generic error during runtime: ", e);
 			e.printStackTrace();
 		    String trace = Warning.getStackTrace(e);
 		    

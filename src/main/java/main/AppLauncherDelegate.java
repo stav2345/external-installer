@@ -4,7 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import config.GithubConfig;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class AppLauncherDelegate {
+	
+	private static final Logger LOGGER = LogManager.getLogger(AppLauncherDelegate.class);
 
 	/**
 	 * Launch the real application
@@ -21,7 +26,7 @@ public class AppLauncherDelegate {
 		String jarName = config.getValue(GithubConfig.JAR_PATH);
 		String javaPath = config.getValue(GithubConfig.JAVA_PATH);
 		
-		System.out.println("Launching " + jarName 
+		LOGGER.info("Launching " + jarName 
 				+ " with java in " + javaPath 
 				+ " from folder " + appPath);
 		

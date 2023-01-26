@@ -11,7 +11,12 @@ import dialog.Warning;
 import release.ProxyConfigException;
 import release.VersionManager;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class FlowActions {
+	
+	private static final Logger LOGGER = LogManager.getLogger(FlowActions.class);
 
 	private VersionManager check;
 	
@@ -45,6 +50,7 @@ public class FlowActions {
 				official = check.getLatestOfficialVersion();
 			}
 		} catch (IOException e) {
+			LOGGER.error("Error in the version update process", e);
 			e.printStackTrace();
 			launchApp();
 			return;
@@ -100,7 +106,7 @@ public class FlowActions {
 			launcher.launchApp();
 			
 		} catch (InterruptedException | IOException e) {
-			
+			 LOGGER.error("Error in launching app ", e);
 			e.printStackTrace();
 			
 			Warning.warnUser("Error", 
@@ -152,7 +158,7 @@ public class FlowActions {
 			check.updateVersion();
 			
 		} catch (IOException e) {
-
+			LOGGER.error("Error in installing the latest version ",e);
 			e.printStackTrace();
 
 			if (e instanceof UnknownHostException) {
